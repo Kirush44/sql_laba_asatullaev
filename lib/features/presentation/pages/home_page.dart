@@ -37,6 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Future<void> get openGitHup async => launchUrl(Uri.parse('https://github.com/Kirush44/sql_laba_asatullaev'), mode: .externalApplication);
+
   @override
   void initState() {
     super.initState();
@@ -44,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ..add(DatabaseEventGetLocalStorage())
       ..add(DatabaseEventGetBackupFileName());
     tableViewIndex = ValueNotifier<int?>(null);
-    controllerConfetti = ConfettiController(duration: const Duration(seconds: 3));
+    controllerConfetti = ConfettiController(duration: const Duration(seconds: 5));
   }
 
   @override
@@ -102,6 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 mybtn(
                   child: Text("Гитхаб", style: .new(color: Theme.of(context).colorScheme.primary, fontSize: 14),),
+                  callback: () async => await openGitHup
                 ),
                 mybtn(
                   color: Colors.pinkAccent,
@@ -295,7 +298,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Text("Запустить", style: .new(color: Theme.of(context).colorScheme.primary)),
                           callback: () {
                             
-                            if (context.read<DatabaseBloc>().state.changes % 7 == 1) controllerConfetti.play();
+                            if (context.read<DatabaseBloc>().state.changes % 7 == 0) controllerConfetti.play();
                             context.read<DatabaseBloc>().add(DatabaseEventQuery(controllerSQL.text));
                           },
                         ),

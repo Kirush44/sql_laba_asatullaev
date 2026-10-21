@@ -21,7 +21,7 @@ class WeConfetti extends StatelessWidget {
         shouldLoop: false,
         confettiController: controllerConfetti,
         blastDirection: pi / 2,
-        emissionFrequency: 0.01,
+        emissionFrequency: 0.007,
         numberOfParticles: 30,
         maxBlastForce: 100,
         minBlastForce: 80,
