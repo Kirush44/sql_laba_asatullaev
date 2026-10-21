@@ -32,4 +32,3 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_TOKEN }}'
           channelId: 'live'
           projectId: 'asatullaevsql'
-          entryPoint: './fake_sql'
