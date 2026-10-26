@@ -39,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> get openGitHup async => launchUrl(Uri.parse('https://github.com/Kirush44/sql_laba_asatullaev'), mode: .externalApplication);
+  Future<void> get openPDF async => launchUrl(Uri.parse('https://docs.google.com/presentation/d/1NJwZew4kFnnLubs-elmz4AYiZmmJNtfoRzmWnRcPA8k/edit?usp=sharing'), mode: .externalApplication);
 
   @override
   void initState() {
@@ -111,6 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.pinkAccent,
                   colorBorder: Colors.transparent,
                   child: Text("README", style: .new(color: Theme.of(context).colorScheme.primary, fontSize: 14),),
+                  callback: () async => await openPDF
                 ),
               ],
             )
