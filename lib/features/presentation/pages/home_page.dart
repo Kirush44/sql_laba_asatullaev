@@ -20,6 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final controllerSQL = CodeEditorController();
   late final ValueNotifier<int?> tableViewIndex;
   late final ConfettiController controllerConfetti;
+  final ValueNotifier<int> controllerConfettiInit = ValueNotifier<int>(0);
 
   WeButton mybtn({
     required Widget child, 
@@ -186,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ]
                                   ), 
                                   names: [
-                                    MyColumnSettings(name: "id", type: .INT, isPrimaryKey: true),
+                                    MyColumnSettings(name: "id", type: .INT, isPrimaryKey: true, autoIncrement: true,isUnique: true,),
                                     MyColumnSettings(name: "name", type: .TEXT, isPrimaryKey: false),
                                     MyColumnSettings(name: "version", type: .INT, isPrimaryKey: false),
                                   ], 
@@ -203,9 +204,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                       MyCellFloat(10 * (10 - i - 1) ~/ 1 / 100),
                                       MyCellText(['completed', 'running', 'inactive'][(2*i + i*i + 1) % 3]),
                                     ]
-                                    ), 
+                                  ),
                                   names: [
-                                    MyColumnSettings(name: "id", type: .INT, isPrimaryKey: true),
+                                    MyColumnSettings(name: "id", type: .INT, isPrimaryKey: true, isUnique: true, autoIncrement: true),
                                     MyColumnSettings(name: "dataset_id", type: .INT),
                                     MyColumnSettings(name: "model_id", type: .TEXT),
                                     MyColumnSettings(name: "accuracy", type: .FLOAT, defaultValue: 0),
@@ -292,15 +293,21 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ],
                       bottomButtons: [
-                        mybtn(
-                          color: Colors.pinkAccent,
-                          colorBorder: Colors.transparent,
-                          child: Text("Запустить", style: .new(color: Theme.of(context).colorScheme.primary)),
-                          callback: () {
-                            
-                            if (context.read<DatabaseBloc>().state.changes % 7 == 0) controllerConfetti.play();
-                            context.read<DatabaseBloc>().add(DatabaseEventQuery(controllerSQL.text));
-                          },
+                        ValueListenableBuilder(
+                          valueListenable: controllerConfettiInit, 
+                          builder: (context, value, child) {
+                            return mybtn(
+                              color: Colors.pinkAccent,
+                              colorBorder: Colors.transparent,
+                              child: Text("Запустить", style: .new(color: Theme.of(context).colorScheme.primary)),
+                              callback: () {
+                                
+                                if (value % 7 == 0) controllerConfetti.play();
+                                controllerConfettiInit.value++;
+                                context.read<DatabaseBloc>().add(DatabaseEventQuery(controllerSQL.text));
+                              },
+                            );
+                          }
                         ),
                         mybtn(
                           child: Text("Очистить", style: .new(color: Theme.of(context).colorScheme.primary)),

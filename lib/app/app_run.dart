@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(create: (context) => DatabaseBloc())
         ],
-        child: const MyHomePage(title: 'Асатуллаев лаборанторная'),
+        child: const MyHomePage(title: 'Асатуллаев пупупу'),
         )
       ),
     );
